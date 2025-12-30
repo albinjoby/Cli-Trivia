@@ -7,6 +7,7 @@ import shuffle from 'lodash.shuffle'
 import { decode } from 'he'
 
 let SCORE = 0
+let COUNT = 0 
 
 interface option{
   value:string,
@@ -42,12 +43,13 @@ const questions = async(): Promise<Question[]> => {
 }
 
 async function askQuestion(question:string, answerArray:string[], correctAnswer:string){
+  COUNT ++
   const options:option[] = []
   answerArray.forEach((answer)=>{
     options.push({value:answer, label:answer})
   })
   const answer = await p.select({
-    message: question,
+    message: `${COUNT}) ${question}`,
     options: options,
     initialValue: '1'
   })
