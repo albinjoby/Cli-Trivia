@@ -1,0 +1,20 @@
+{
+  "name": "cli-trivia",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "start": "dev"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "bin": "./index.ts",
+  "dependencies": {
+    "@clack/prompts": "^0.11.0",
+    "picocolors": "^1.1.1"
+  }
+}
