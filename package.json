@@ -5,6 +5,7 @@
   "private": true,
   "devDependencies": {
     "@types/bun": "latest",
+    "@types/he": "^1.2.3",
     "@types/lodash.shuffle": "^4.2.9"
   },
   "scripts": {
