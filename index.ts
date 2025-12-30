@@ -4,6 +4,7 @@ import * as p from '@clack/prompts'
 import color from 'picocolors'
 import {setTimeout} from 'timers/promises'
 import shuffle from 'lodash.shuffle'
+import { decode } from 'he'
 
 let SCORE = 0
 
@@ -35,8 +36,8 @@ const questions = async(): Promise<Question[]> => {
   const data:any = await result.json()
   
   return data.results.map((q: any) => {
-    const answerArray = shuffle([...q.incorrect_answers, q.correct_answer])
-    return new Question(q.question, answerArray, q.correct_answer)
+    const answerArray = shuffle([...q.incorrect_answers, q.correct_answer].map(ans => decode(ans)))
+    return new Question(decode(q.question), answerArray, decode(q.correct_answer))
   })
 }
 
@@ -70,7 +71,7 @@ async function main(){
   }
   
   p.outro(`${color[SCORE == 3 ? 'bgYellow' : (SCORE > 3 ? 'bgGreen' : 'bgRed')](color.black(`You got ${color.bold(SCORE)} questions correct!`))}`)
-  p.outro(`${color.bgCyan(color.black('Thanks for playing'))}`)
+  p.outro(`${color.bgBlue(color.black('Thanks for playing'))}`)
 }
 
 main()
