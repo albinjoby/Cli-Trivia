@@ -25,7 +25,13 @@ class Question{
 }
 
 const questions = async(): Promise<Question[]> => {
-  const result = await fetch("https://opentdb.com/api.php?amount=5&category=18&type=multiple")
+  const result = await fetch("https://opentdb.com/api.php?amount=5&category=18&type=multiple&difficulty=medium")
+  
+  if(!result.ok){
+    console.log(result.statusText)
+    process.exit(1)
+  }
+  
   const data:any = await result.json()
   
   return data.results.map((q: any) => {
@@ -37,7 +43,7 @@ const questions = async(): Promise<Question[]> => {
 async function askQuestion(question:string, answerArray:string[], correctAnswer:string){
   const options:option[] = []
   answerArray.forEach((answer)=>{
-    options.push({value:answer, lable:answer})
+    options.push({value:answer, label:answer})
   })
   const answer = await p.select({
     message: question,
@@ -56,15 +62,15 @@ async function askQuestion(question:string, answerArray:string[], correctAnswer:
 }
 
 async function main(){
-  p.intro('hello')
+  p.intro(`${color.bgBlue(color.black(`Welcome to the ${color.bold('CLI Trivia')}!!!`))}`)
   
   const questionsList = await questions()
   for (const question of questionsList){
     await askQuestion(question.question, question.answersArray, question.correctAnswer)
   }
   
-  p.note(`your score is ${SCORE}`)
-  p.outro('bye')
+  p.outro(`${color[SCORE == 3 ? 'bgYellow' : (SCORE > 3 ? 'bgGreen' : 'bgRed')](color.black(`You got ${color.bold(SCORE)} questions correct!`))}`)
+  p.outro(`${color.bgCyan(color.black('Thanks for playing'))}`)
 }
 
 main()
