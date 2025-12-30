@@ -7,7 +7,7 @@
     "@types/bun": "latest"
   },
   "scripts": {
-    "start": "dev"
+    "dev": "bun run index.ts"
   },
   "peerDependencies": {
     "typescript": "^5"
@@ -15,6 +15,7 @@
   "bin": "./index.ts",
   "dependencies": {
     "@clack/prompts": "^0.11.0",
+    "lodash.shuffle": "^4.2.0",
     "picocolors": "^1.1.1"
   }
 }
